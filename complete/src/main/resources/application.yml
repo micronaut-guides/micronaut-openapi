@@ -1,0 +1,35 @@
+micronaut:
+    application:
+        name: openapitutorial
+    server:
+        port: 8081
+        cors:
+            enabled: true
+#tag::openapi[]
+    router:
+        static-resources:
+            swagger:
+                paths:
+                    - classpath:META-INF/swagger
+                mapping: "/swagger/**"
+#end::openapi[]
+    security:
+        endpoints:
+            login:
+                enabled: true
+            oauth:
+                enabled: true
+        token:
+            jwt:
+                enabled: true
+                signatures:
+                    secret:
+                        generator:
+                            secret: pleaseChangeThisSecretForANewOne
+        enabled: true
+        interceptUrlMap:
+            -
+                pattern: /swagger/*
+                httpMethod: GET
+                access:
+                    - isAnonymous()
